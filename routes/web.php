@@ -31,6 +31,15 @@ Route::middleware(['auth'])->group(function () {
     Route::put('movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
     Route::delete('movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
 
+    // todo:
+//    Route::get('music', [MovieController::class, 'index'])->name('music.index');
+//    Route::get('music/create', [MovieController::class, 'create'])->name('music.create');
+//    Route::post('music', [MovieController::class, 'store'])->name('music.store');
+//    Route::get('music/{movie}', [MovieController::class, 'show'])->name('music.show');
+//    Route::get('music/{movie}/edit', [MovieController::class, 'edit'])->name('music.edit');
+//    Route::put('music/{movie}', [MovieController::class, 'update'])->name('music.update');
+//    Route::delete('music/{movie}', [MovieController::class, 'destroy'])->name('music.destroy');
+
     //  Route::apiResource('movies', MoviesController::class);
 });
 

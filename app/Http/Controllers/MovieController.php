@@ -11,7 +11,6 @@ use App\Http\Requests\MovieRequest;
 
 use App\Models\Movie;
 
-
 class MovieController extends Controller
 {
     /**
@@ -102,7 +101,7 @@ class MovieController extends Controller
     {
         try {
             $movie->delete();
-            return response()-json([
+            return response()->json([
                     'status' => 'success'
                 ]);
         } catch (Exception $e) {
