@@ -26,6 +26,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
+
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Link</th>
@@ -55,7 +56,8 @@
                             <a href="{{ route('movies.edit', ['movie' => $movie->id]) }}">
                                 <button class="btn btn-success btn-sm">EDIT</button>
                             </a>
-                            <button class="btn btn-danger btn-sm delete" data-id="{{ $movie->id }}">
+
+                            <button class="bg-gray-100 px-2 m-1" data-id="{{ $movie->id }}">
                                 DELETE
                             </button>
                         </td>

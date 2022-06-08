@@ -7,107 +7,68 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Exception;
-use App\Http\Requests\MovieRequest;
+use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
 
 use App\Models\Movie;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return View
-     */
-    public function index(): View
+    public function index()
     {
-        return view("movies.index", [
-            'movies' => Movie::paginate(20)
+        return view("movie.index", [
+            'movies' => Movie::paginate(40)
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create(): View
+    public function create()
     {
-        return view("movies.create");
+        return view("movie.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  MovieRequest $request
-     * @return RedirectResponse
-     */
-    public function store(MovieRequest $request): RedirectResponse
+    public function store(StoreMovieRequest $request)
     {
         $data = $request->validated();
         $movie = Movie::create($data);
         $movie->save();
 
-        return redirect(route('movies.index'));
+        return redirect(route('movie.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Movie $movie
-     * @return View
-     */
-    public function show(Movie $movie): View
+    public function show(Movie $movie)
     {
-        return view("movies.show", [
-            'movie' => $movie
+        return view("movie.show", [
+            'movies' => $movie
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Movie $movie
-     * @return View
-     */
-    public function edit(Movie $movie): View
+    public function edit(Movie $movie)
     {
-        return view("movies.edit", [
-            'movie' => $movie
+        return view("movie.edit", [
+            'movies' => $movie
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request $request
-     * @param  Movie $movie
-     * @return RedirectResponse
-     */
-    public function update(Request $request, Movie $movie): RedirectResponse
+    public function update(UpdateMovieRequest $updateMovieRequest, Request $request, Movie $movie): RedirectResponse
     {
+        $data = $updateMovieRequest->validated(); // todo: request
         $movie->fill($request->all());
         $movie->save();
 
-        return redirect(route('movies.index'));
+        return redirect(route('movie.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Movie $movie
-     * @return JsonResponse
-     */
-    public function destroy(Movie $movie)
+    public function destroy(Movie $movie): JsonResponse
     {
         try {
             $movie->delete();
             return response()->json([
-                    'status' => 'success'
-                ]);
+                'status' => 'success'
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'There is error!'
+                'message' => 'Error destroy!'
             ])->setStatusCode(500);
         }
     }

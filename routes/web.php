@@ -1,7 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\MusicController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\PinBoardController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,29 +24,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('movies', [MovieController::class, 'index'])->name('movies.index');
-    Route::get('movies/create', [MovieController::class, 'create'])->name('movies.create');
-    Route::post('movies', [MovieController::class, 'store'])->name('movies.store');
-    Route::get('movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
-    Route::get('movies/{movie}/edit', [MovieController::class, 'edit'])->name('movies.edit');
-    Route::put('movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
-    Route::delete('movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
-
-    // todo:
-//    Route::get('music', [MovieController::class, 'index'])->name('music.index');
-//    Route::get('music/create', [MovieController::class, 'create'])->name('music.create');
-//    Route::post('music', [MovieController::class, 'store'])->name('music.store');
-//    Route::get('music/{movie}', [MovieController::class, 'show'])->name('music.show');
-//    Route::get('music/{movie}/edit', [MovieController::class, 'edit'])->name('music.edit');
-//    Route::put('music/{movie}', [MovieController::class, 'update'])->name('music.update');
-//    Route::delete('music/{movie}', [MovieController::class, 'destroy'])->name('music.destroy');
-
-    //  Route::apiResource('movies', MoviesController::class);
+Route::middleware( ['auth'] )->group( function ()
+{
+    Route::resources(
+        [
+            'dashboards' => DashboardController::class,
+            'movies' => MovieController::class,
+            'musics' => MusicController::class,
+            'favorites' => FavoriteController::class,
+            'tasks' => TaskController::class,
+            'pin-boards' => PinBoardController::class,
+        ]
+    );
+    Route::get('/notifications/{notification_id}', [NotificationController::class, 'notification.index']);
+    Route::get('/notification', [NotificationController::class, 'notification.index']);
 });
 
 require __DIR__.'/auth.php';

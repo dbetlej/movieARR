@@ -21,6 +21,7 @@ class Movie extends Model
         'series' => null,
         'category' => null,
         'favorite' => null,
+        'pined' => null,
         'watched' => null,
         'to_watch' => null,
     ];
@@ -37,6 +38,7 @@ class Movie extends Model
         'series',
         'category',
         'favorite',
+        'pined',
         'watched',
         'to_watch',
     ];
